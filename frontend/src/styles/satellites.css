@@ -1,0 +1,242 @@
+/* ===== PAGE ===== */
+
+.page-title{
+    color:#fff;
+    margin:0;
+    font-size:30px;
+    font-weight:700;
+}
+
+.page-subtitle{
+    color:#94A3B8;
+    margin-top:6px;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.add-btn{
+    background:#2563EB;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.add-btn:hover{
+    background:#1D4ED8;
+}
+
+/* ===== SEARCH ===== */
+
+.search-box{
+    background:#1E293B;
+    padding:14px 18px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.search-box input{
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:white;
+    font-size:15px;
+}
+
+/* ===== TABLE ===== */
+
+.table-card{
+    background:#1E293B;
+    border-radius:14px;
+    padding:22px;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    color:#CBD5E1;
+    text-align:left;
+    padding:15px;
+    border-bottom:1px solid #334155;
+}
+
+td{
+    color:white;
+    padding:15px;
+    border-bottom:1px solid #334155;
+}
+
+tr:hover{
+    background:#23324A;
+}
+
+.name-cell{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+/* ===== HEALTH ===== */
+
+.progress{
+    width:110px;
+    height:8px;
+    background:#334155;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:6px;
+}
+
+.progress-fill{
+    height:100%;
+    background:#22C55E;
+}
+
+/* ===== STATUS ===== */
+
+.badge{
+    color:white;
+    border-radius:20px;
+    padding:6px 14px;
+    font-size:13px;
+    display:inline-block;
+}
+
+/* ===== ACTIONS ===== */
+
+.actions{
+    display:flex;
+    gap:15px;
+    font-size:17px;
+}
+
+.actions svg{
+    cursor:pointer;
+    transition:.3s;
+}
+
+.actions svg:hover{
+    transform:scale(1.15);
+}
+
+/* ===== DRAWER ===== */
+
+.drawer-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:flex-end;
+    z-index:999;
+}
+
+.drawer{
+    width:430px;
+    height:100vh;
+    background:#0F172A;
+    padding:30px;
+    animation:slide .35s ease;
+    overflow:auto;
+}
+
+@keyframes slide{
+
+from{
+
+transform:translateX(100%);
+
+}
+
+to{
+
+transform:translateX(0);
+
+}
+
+}
+
+.drawer h2{
+
+color:white;
+margin-bottom:30px;
+
+}
+
+.drawer label{
+
+display:block;
+color:#CBD5E1;
+margin-bottom:8px;
+margin-top:18px;
+
+}
+
+.drawer input,
+.drawer select{
+
+width:100%;
+padding:12px;
+background:#1E293B;
+border:1px solid #334155;
+color:white;
+border-radius:8px;
+box-sizing:border-box;
+
+}
+
+.drawer-buttons{
+
+display:flex;
+justify-content:flex-end;
+gap:12px;
+margin-top:35px;
+
+}
+
+.cancel-btn{
+
+background:#475569;
+color:white;
+border:none;
+padding:11px 20px;
+border-radius:8px;
+cursor:pointer;
+
+}
+
+.save-btn{
+
+background:#2563EB;
+color:white;
+border:none;
+padding:11px 20px;
+border-radius:8px;
+cursor:pointer;
+
+}
+
+.save-btn:hover{
+
+background:#1D4ED8;
+
+}
