@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend
+  namespace: enterprise-space
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      containers:
+        - name: backend
+
+          image: enterprise-space-mission-platform-backend:latest
+
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8000
+
+          env:
+            - name: DATABASE_HOST
+              value: postgres
+
+            - name: DATABASE_PORT
+              value: "5432"
+
+            - name: DATABASE_NAME
+              value: space_mission_db
+
+            - name: DATABASE_USER
+              value: postgres
+
+            - name: DATABASE_PASSWORD
+              value: injila2005
