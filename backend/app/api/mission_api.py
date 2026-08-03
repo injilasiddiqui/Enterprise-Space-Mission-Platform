@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.database.connection import get_db
 from app.models.mission import Mission
 from app.schemas.mission_schema import MissionCreate
+from app.core.security import get_current_admin
 
 router = APIRouter(
     tags=["Mission Management"]
@@ -217,13 +218,18 @@ def mission_summary(
         "active": active,
         "completed": completed
     }
-@router.put("/missions/{mission_id}/approve")
+@router.put(
+    "/missions/{mission_id}/approve",
+    summary="Approve Mission (Admin Only)"
+)
 def approve_mission(
     mission_id: int,
+    current_user=Depends(get_current_admin),
     db: Session = Depends(get_db)
 ):
     """
     Approve a mission before execution.
+    Only Admin users are allowed.
     """
 
     mission = (
@@ -232,10 +238,11 @@ def approve_mission(
         .first()
     )
 
-    if not mission:
-        return {
-            "message": "Mission not found"
-        }
+    if mission is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Mission not found."
+        )
 
     mission.status = "Approved"
 
@@ -244,6 +251,7 @@ def approve_mission(
 
     return {
         "message": "Mission approved successfully.",
+        "approved_by": current_user["sub"],
         "mission": mission
     }
 @router.get("/missions/history")

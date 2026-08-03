@@ -1,0 +1,49 @@
+services:
+
+  database:
+    image: postgres:16
+    container_name: space-postgres
+    restart: always
+
+    environment:
+      POSTGRES_DB: space_mission_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: injila2005
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+
+    container_name: space-backend
+
+    depends_on:
+      - database
+
+    environment:
+      DATABASE_NAME: space_mission_db
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: injila2005
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+
+    container_name: space-frontend
+
+    depends_on:
+      - backend
+
+    ports:
+      - "5173:5173"
+
+volumes:
+  postgres_data:

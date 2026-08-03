@@ -8,6 +8,10 @@ from app.api.mission_api import router as mission_router
 from app.api.ground_station_api import router as ground_station_router
 from app.api.ai_api import router as ai_router
 from app.api.dashboard_api import router as dashboard_router
+from app.api.command_api import router as command_router
+from app.api.ground_station_schedule_api import router as ground_station_schedule_router
+from app.api.visibility_api import router as visibility_router
+from app.api.auth_api import router as auth_router
 
 app = FastAPI()
 
@@ -28,6 +32,10 @@ app.include_router(mission_router)
 app.include_router(ground_station_router)
 app.include_router(ai_router)
 app.include_router(dashboard_router)
+app.include_router(command_router)
+app.include_router(ground_station_schedule_router)
+app.include_router(visibility_router) 
+app.include_router(auth_router)
 
 
 @app.on_event("startup")

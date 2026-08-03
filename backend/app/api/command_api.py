@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from datetime import datetime
 import uuid
+from app.core.security import get_current_admin
 
 router = APIRouter(tags=["Satellite Commands"])
 
@@ -27,11 +28,19 @@ def generate_command(data: CommandRequest):
     }
 
 
-@router.post("/commands/{command_id}/execute")
-def execute_command(command_id: str):
+@router.post(
+    "/commands/{command_id}/execute",
+    summary="Execute Satellite Command (Admin Only)"
+)
+def execute_command(
+    command_id: str,
+    current_user=Depends(get_current_admin)
+):
 
     return {
         "command_id": command_id,
         "execution_status": "Executed Successfully",
-        "execution_time": datetime.utcnow()
+        "execution_time": datetime.utcnow(),
+        "executed_by": current_user["sub"],
+        "approved_role": current_user["role"]
     }
