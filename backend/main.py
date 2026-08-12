@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+from app.monitoring.metrics import PrometheusMiddleware
 
 from app.database.init_db import init_db
 from app.api.satellite_api import router as satellite_router
@@ -12,8 +15,10 @@ from app.api.command_api import router as command_router
 from app.api.ground_station_schedule_api import router as ground_station_schedule_router
 from app.api.visibility_api import router as visibility_router
 from app.api.auth_api import router as auth_router
+from app.api.orbital_api import router as orbital_router
 
 app = FastAPI()
+app.add_middleware(PrometheusMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
@@ -36,6 +41,7 @@ app.include_router(command_router)
 app.include_router(ground_station_schedule_router)
 app.include_router(visibility_router) 
 app.include_router(auth_router)
+app.include_router(orbital_router)
 
 
 @app.on_event("startup")
@@ -49,4 +55,10 @@ def root():
         "message": "Welcome to Enterprise Space Mission Operations Platform",
         "status": "Backend is running successfully",
     }
+@app.get("/metrics", tags=["Monitoring"])
+def metrics():
+    return Response(
+        content=generate_latest(),
+        media_type=CONTENT_TYPE_LATEST
+    )
 

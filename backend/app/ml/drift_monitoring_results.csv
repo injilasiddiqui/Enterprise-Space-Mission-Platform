@@ -1,0 +1,2 @@
+baseline_accuracy,current_accuracy,performance_drop,drift_threshold,drift_status,recommendation
+0.923,0.923,0.0,0.05,NO SIGNIFICANT DRIFT,Model performance is within the accepted range.

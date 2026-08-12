@@ -1,0 +1,25 @@
+{
+  "model_name": "Satellite Predictive Maintenance Random Forest",
+  "model_version": "1.0.0",
+  "algorithm": "RandomForestClassifier",
+  "dataset_type": "Simulated Satellite Telemetry",
+  "total_samples": 5000,
+  "training_split": 0.8,
+  "testing_split": 0.2,
+  "features": [
+    "battery",
+    "temperature",
+    "solar_panel"
+  ],
+  "target": "health_status",
+  "classes": [
+    "Healthy",
+    "Warning",
+    "Critical"
+  ],
+  "accuracy": 0.923,
+  "precision": 0.9231,
+  "recall": 0.923,
+  "f1_score": 0.923,
+  "status": "Active"
+}
