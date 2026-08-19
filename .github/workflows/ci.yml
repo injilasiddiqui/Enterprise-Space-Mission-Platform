@@ -43,7 +43,7 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: backend
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt pytest requests
 
       - name: Start FastAPI backend
         working-directory: backend
