@@ -94,7 +94,36 @@ def get_all_missions(
         "data": missions
     }
 
+@router.get("/missions/history")
+def mission_history(
+    satellite_name: Optional[str] = Query(
+        default=None,
+        description="Filter mission history by satellite"
+    ),
+    db: Session = Depends(get_db)
+):
+    """
+    Mission History Report
+    """
 
+    query = db.query(Mission)
+
+    if satellite_name:
+        query = query.filter(
+            Mission.satellite_name == satellite_name
+        )
+
+    missions = (
+        query
+        .order_by(Mission.id.desc())
+        .all()
+    )
+
+    return {
+        "satellite_filter": satellite_name,
+        "total_missions": len(missions),
+        "history": missions
+    }
 @router.get(
     "/missions/{mission_id}",
     summary="Get Mission by ID"
@@ -253,22 +282,4 @@ def approve_mission(
         "message": "Mission approved successfully.",
         "approved_by": current_user["sub"],
         "mission": mission
-    }
-@router.get("/missions/history")
-def mission_history(
-    db: Session = Depends(get_db)
-):
-    """
-    Mission History Report
-    """
-
-    missions = (
-        db.query(Mission)
-        .order_by(Mission.id.desc())
-        .all()
-    )
-
-    return {
-        "total_missions": len(missions),
-        "history": missions
     }

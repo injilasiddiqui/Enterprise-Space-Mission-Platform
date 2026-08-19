@@ -77,6 +77,9 @@ def delete_satellite(
 
     db.delete(satellite)
     db.commit()
+    return {
+        "message": "Satellite deleted successfully"
+    }
 @router.get("/satellites/performance")
 def fleet_performance(
     db: Session = Depends(get_db)
@@ -114,6 +117,12 @@ def fleet_performance(
         )
     else:
         average_health = 0
+    if critical_satellites > 0:
+        fleet_status = "Attention Required"
+    elif maintenance_satellites > 0:
+        fleet_status = "Operational with Warnings"
+    else:
+        fleet_status = "Operational"
 
     return {
         "fleet_size": total_satellites,
@@ -121,6 +130,5 @@ def fleet_performance(
         "maintenance_satellites": maintenance_satellites,
         "critical_satellites": critical_satellites,
         "average_health": average_health,
-        "fleet_status": "Operational"
+        "fleet_status": fleet_status
     }
-    return {"message": "Satellite deleted successfully"}

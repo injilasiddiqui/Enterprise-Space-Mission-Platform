@@ -44,6 +44,15 @@ class TelemetryCreate(BaseModel):
         ...,
         example="Good"
     )
+    payload_status: Literal[
+        "Operational",
+        "Degraded",
+        "Offline"
+    ] = Field(
+        ...,
+        description="Spacecraft payload operational status",
+        example="Operational"
+    )
 
     status: Literal[
         "Healthy",

@@ -1,15 +1,35 @@
 from fastapi import APIRouter
 
+from app.orbital.orbital_service import (
+    check_ground_station_visibility,
+    predict_next_pass,
+)
+
+
 router = APIRouter(tags=["Satellite Visibility"])
 
 
-@router.get("/visibility/{satellite_name}")
-def satellite_visibility(satellite_name: str):
+@router.get(
+    "/visibility/current",
+    summary="Check Current Satellite Visibility"
+)
+def current_visibility():
+    """
+    Calculate current satellite visibility from the
+    Islamabad Ground Station using TLE/SGP4 propagation.
+    """
 
-    return {
-        "satellite": satellite_name,
-        "visible": True,
-        "next_pass": "2026-08-02 13:45 UTC",
-        "duration": "11 Minutes",
-        "ground_station": "Karachi Ground Station"
-    }
+    return check_ground_station_visibility()
+
+
+@router.get(
+    "/visibility/next-pass",
+    summary="Predict Next Communication Pass"
+)
+def next_communication_pass():
+    """
+    Predict satellite communication passes over the
+    Islamabad Ground Station during the next 24 hours.
+    """
+
+    return predict_next_pass()

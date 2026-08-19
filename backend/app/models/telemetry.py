@@ -11,4 +11,5 @@ class Telemetry(Base):
     temperature = Column(Float, nullable=False)
     solar_panel = Column(Float, nullable=False)
     communication = Column(String, nullable=False)
+    payload_status = Column(String, nullable=False, default="Operational")
     status = Column(String, nullable=False)
