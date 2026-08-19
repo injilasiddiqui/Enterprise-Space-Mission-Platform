@@ -1,0 +1,55 @@
+name: Enterprise Space Mission CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: space_mission_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: injila2005
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DATABASE_NAME: space_mission_db
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: injila2005
+      DATABASE_HOST: localhost
+      DATABASE_PORT: 5432
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: pip install -r requirements.txt
+
+      - name: Start FastAPI backend
+        working-directory: backend
+        run: |
+          python -m uvicorn main:app --host 0.0.0.0 --port 8000 &
+          sleep 10
+
+      - name: Run automated tests
+        run: python -m pytest tests/test_api.py -v
