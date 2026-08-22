@@ -27,7 +27,7 @@ pipeline {
             steps {
                 dir('backend') {
                     bat 'start /B python -m uvicorn main:app --host 127.0.0.1 --port 8000'
-                    bat 'timeout /t 10 /nobreak'
+                    bat 'ping 127.0.0.1 -n 11 > nul'
                 }
             }
         }
