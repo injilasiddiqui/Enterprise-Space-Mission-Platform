@@ -23,7 +23,16 @@ pipeline {
             }
         }
 
-        stage('Automated API Tests') {
+        stage('Start FastAPI Backend') {
+            steps {
+                dir('backend') {
+                    bat 'start /B python -m uvicorn main:app --host 127.0.0.1 --port 8000'
+                    bat 'timeout /t 10 /nobreak'
+                }
+            }
+        }
+
+        stage('Run Automated API Tests') {
             steps {
                 bat 'python -m pytest tests/test_api.py -v'
             }
